@@ -14,8 +14,9 @@ class Detection:
     x1,y1,x2,y2 = self.bbox
     return (x1+x2) / 2 , (y1+y2) / 2
 
+
 @dataclass
-class Pipelinestate:
+class PipelineState:
   frame_id:int
   frame: np.ndarray
   detections: list[Detection] = field(default_factory=list)
