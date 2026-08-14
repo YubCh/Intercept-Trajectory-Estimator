@@ -15,7 +15,7 @@ class Detection:
     return (x1+x2) / 2 , (y1+y2) / 2
 
 @dataclass
-class Pipleinestate:
+class Pipelinestate:
   frame_id:int
-  image: np.ndarry
+  frame: np.ndarray
   detections: list[Detection] = field(default_factory=list)
