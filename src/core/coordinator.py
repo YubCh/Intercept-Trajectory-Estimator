@@ -6,5 +6,14 @@ class Coordinator:
     self.modules = modules
 
 
+  def run(self, source, max_frames=None):
+    for frame_id, frame in source.frames():
+      state = PipelineState(frame_id, frame)
 
+      for module in self.modules:
+        module.process(state)
+      print(f"frame {frame_id}: {len(state.detections)} detections")
+
+      if max_frames is not None and max_frames <= frame_id + 1:
+        break
 
