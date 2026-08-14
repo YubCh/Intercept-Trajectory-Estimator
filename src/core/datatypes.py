@@ -20,3 +20,12 @@ class PipelineState:
   frame_id:int
   frame: np.ndarray
   detections: list[Detection] = field(default_factory=list)
+
+@dataclass
+class Track:
+  track_id:int
+  history:list[Detection] = field(default_factory=list)
+  frames_since_update: int = 0
+  @property
+  def last_detection(self):
+    return self.history[-1]
