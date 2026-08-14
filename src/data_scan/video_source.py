@@ -2,7 +2,7 @@ from pathlib import Path
 import cv2 
  
 
-class ImageFolderSource:
+class VideoSource:
   def __init__(self, folder_path, extension=".jpg"):
     self.folder_path = Path(folder_path)
     self.frame_paths = sorted(self.folder_path.glob(f"*{extension}"))
@@ -11,15 +11,9 @@ class ImageFolderSource:
 
   def frames(self):
     for i,path in enumerate(self.frame_paths):
-      image = cv2.imread(str(path))
-      if image is None:
+      frame = cv2.imread(str(path))
+      if frame is None:
         raise ValueError(f"Could not read {path}")
-      yield i, image
+      yield i, frame
 
     
-
-s = ImageFolderSource("data/visdrone/VisDrone2019-MOT-val/sequences/uav0000086_00000_v")
-for frame_id, image in s.frames():
-    print(frame_id, image.shape)
-    if frame_id == 2:
-        break
