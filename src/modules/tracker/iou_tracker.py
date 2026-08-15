@@ -27,7 +27,7 @@ class IouTracker(BaseModule):
     self.next_id = 0
 
   def process(self, state):
-    matches, unmatched_detections, unmatched_tracks = self._match(state.detections)
+    matches, unmatched_detections, unmatched_tracks = self.match(state.detections)
 
     for track, detection in matches:
       track.history.append(detection)
@@ -64,7 +64,7 @@ class IouTracker(BaseModule):
 
     pairs.sort(reverse=True)
 
-    for iou,track_index,detection_index in pairs:
+    for _,track_index,detection_index in pairs:
       if track_index in matched_track_indices or detection_index in matched_detection_indices:
         continue
       else:
