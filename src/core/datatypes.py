@@ -20,7 +20,7 @@ class PipelineState:
   frame_id:int
   frame: np.ndarray
   detections: list[Detection] = field(default_factory=list)
-  track: list[Track] = field(default_factory=list)
+  tracks: list[Track] = field(default_factory=list)
 
 @dataclass
 class Track:
