@@ -4,6 +4,7 @@ from src.data_scan.visualizer import DetectionVisualizer
 from src.modules.detector.yolo_detector import YoloDetector
 from src.core.coordinator import Coordinator
 from src.modules.tracker.iou_tracker import IouTracker
+from src.modules.predictor.constant_velocity import ConstantVelocityPredictor
 
 def main():
     parser = argparse.ArgumentParser(description="Run Detections on VisDrone sequence")
@@ -18,7 +19,8 @@ def main():
     detector = YoloDetector()
     visualizer = DetectionVisualizer(args.output)
     tracker = IouTracker()
-    coordinator = Coordinator([detector, tracker, visualizer])
+    predictor = ConstantVelocityPredictor()
+    coordinator = Coordinator([detector, tracker,predictor, visualizer])
     coordinator.run(source, max_frames=args.max_frames)
 
 ######TRACKING
