@@ -14,14 +14,6 @@ class Detection:
     x1,y1,x2,y2 = self.bbox
     return (x1+x2) / 2 , (y1+y2) / 2
 
-
-@dataclass
-class PipelineState:
-  frame_id:int
-  frame: np.ndarray
-  detections: list[Detection] = field(default_factory=list)
-  tracks: list[Track] = field(default_factory=list)
-
 @dataclass
 class Track:
   track_id:int
@@ -30,3 +22,18 @@ class Track:
   @property
   def last_detection(self):
     return self.history[-1]
+
+@dataclass
+class Prediction:
+  track_id: int
+  frame_id: int
+  horizon: int
+  point: tuple[float, float]
+
+@dataclass
+class PipelineState:
+  frame_id:int
+  frame: np.ndarray
+  detections: list[Detection] = field(default_factory=list)
+  tracks: list[Track] = field(default_factory=list)
+  predictions: list[Prediction] = field(default_factory=list)
