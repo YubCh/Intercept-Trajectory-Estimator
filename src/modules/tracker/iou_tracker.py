@@ -26,6 +26,27 @@ class IouTracker(BaseModule):
     self.tracks = []
     self.next_id = 0
 
+  def process(self, state):
+    matches, unmatched_detections, unmatched_tracks = self._match(state.detections)
+
+    for track, detection in matches:
+      track.history.append(detection)
+      track.frames_since_update = 0
+
+    for detection in unmatched_detections:
+      new_track = Track(track_id=self.next_id, history=[detection])
+      self.tracks.append(new_track)
+      self.next_id += 1
+
+    for track in unmatched_tracks:
+      track.frames_since_update =+1
+
+    self.tracks = [track for track in self.tracks if track.frames_since_update <= self.max_age]
+    state.tracks = [track for track, _ in matches]
+
+
+
+
   def match(self, detections):
     pairs =[]
     matches = []   
