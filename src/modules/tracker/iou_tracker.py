@@ -36,13 +36,14 @@ class IouTracker(BaseModule):
     for track_index, track in enumerate(self.tracks):
       for detection_index, detection in enumerate(detections):
         iou_value = iou(track.last_detection.bbox, detection.bbox)
-        if iou_value > self.iou_threshold:
+        if iou_value >= self.iou_threshold:
           pair = (iou_value,track_index,detection_index)
           pairs.append(pair)
+
+
     pairs.sort(reverse=True)
 
-    for pair in pairs:
-      iou,track_index,detection_index = pair
+    for iou,track_index,detection_index in pairs:
       if track_index in matched_track_indices or detection_index in matched_detection_indices:
         continue
       else:
@@ -50,12 +51,15 @@ class IouTracker(BaseModule):
         matched_detection_indices.add(detection_index)
         matches.append((self.tracks[track_index], detections[detection_index]))
 
-    for pair in pairs:
-      iou,track_index,detection_index = pair
-      if track_index not in matched_track_indices:
-        unmatched_tracks.add(track_index)
-      if detection_index not in matched_detection_indices:
-        unmatched_detections.add(detection_index)
+    unmatched_tracks = [
+      track for track_index, track in enumerate(self.tracks)
+      if track_index not in matched_track_indices
+    ]
+    unmatched_detections =[
+      detection for detection_index, detection in enumerate(detections)
+      if detection_index not in matched_detection_indices
+    ]
+
     return matches, unmatched_detections, unmatched_tracks
 
 
