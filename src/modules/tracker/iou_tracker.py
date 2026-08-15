@@ -26,6 +26,39 @@ class IouTracker(BaseModule):
     self.tracks = []
     self.next_id = 0
 
+  def match(self, detections):
+    pairs =[]
+    matches = []   
+    matched_track_indices = set()
+    matched_detection_indices = set()
+    unmatched_detections = set()
+    unmatched_tracks = set()
+    for track_index, track in enumerate(self.tracks):
+      for detection_index, detection in enumerate(detections):
+        iou_value = iou(track.last_detection.bbox, detection.bbox)
+        if iou_value > self.iou_threshold:
+          pair = (iou_value,track_index,detection_index)
+          pairs.append(pair)
+    pairs.sort(reverse=True)
+
+    for pair in pairs:
+      iou,track_index,detection_index = pair
+      if track_index in matched_track_indices or detection_index in matched_detection_indices:
+        continue
+      else:
+        matched_track_indices.add(track_index)
+        matched_detection_indices.add(detection_index)
+        matches.append((self.tracks[track_index], detections[detection_index]))
+
+    for pair in pairs:
+      iou,track_index,detection_index = pair
+      if track_index not in matched_track_indices:
+        unmatched_tracks.add(track_index)
+      if detection_index not in matched_detection_indices:
+        unmatched_detections.add(detection_index)
+    return matches, unmatched_detections, unmatched_tracks
+
+
 print(iou((0, 0, 10, 10), (0, 0, 10, 10)))    # 1.0  identical
 print(iou((0, 0, 10, 10), (20, 0, 30, 10)))   # 0.0   
 print(iou((0, 0, 10, 10), (0, 20, 10, 30)))   # 0.0   
