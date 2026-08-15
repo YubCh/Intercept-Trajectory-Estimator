@@ -16,5 +16,4 @@ class Coordinator:
       if max_frames is not None and max_frames <= frame_id + 1:
         break
       ids = sorted(t.track_id for t in state.tracks) 
-      print(f"frame {frame_id}: {len(state.detections)} det, ids={ids}")
-
+      print(f"frame {frame_id}: {len(state.detections)} det, {len(state.tracks)} tracks, {len(state.predictions)} predictions")
