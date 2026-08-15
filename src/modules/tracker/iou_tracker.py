@@ -83,8 +83,3 @@ class IouTracker(BaseModule):
 
     return matches, unmatched_detections, unmatched_tracks
 
-
-print(iou((0, 0, 10, 10), (0, 0, 10, 10)))    # 1.0  identical
-print(iou((0, 0, 10, 10), (20, 0, 30, 10)))   # 0.0   
-print(iou((0, 0, 10, 10), (0, 20, 10, 30)))   # 0.0   
-print(iou((0, 0, 10, 10), (5, 5, 15, 15)))    # 0.1428
