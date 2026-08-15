@@ -4,10 +4,9 @@ import cv2
 from pathlib import Path
 from src.core.base_module import BaseModule
 
-
-
 BOX_COLOR = (0, 255, 0)
 TRAIL_COLOR = (0, 165, 255) 
+PREDICTION_COLOR = (255, 0, 255) 
 
 class DetectionVisualizer(BaseModule):
   def __init__(self, output_dir="outputs",trail_length=30):
@@ -33,5 +32,19 @@ class DetectionVisualizer(BaseModule):
 
       for start, end in zip(trail_points, trail_points[1:]):
         cv2.line(annotated, tuple(int(v) for v in start),tuple(int(v) for v in end), TRAIL_COLOR,3)
+
+      track_predictions = [p for p in state.predictions if p.track_id == track.track_id]
+      track_predictions.sort(key=lambda p: p.horizon)
+      prediction_points = [detection.center] + [p.point for p in track_predictions]
+
+
+      for start, end in zip(prediction_points, prediction_points[1:]):
+        cv2.line(
+        annotated,
+        tuple(int(v) for v in start),
+        tuple(int(v) for v in end),
+        PREDICTION_COLOR,
+        2,
+    )
     cv2.imwrite(str(self.output_dir/f"{state.frame_id}.jpg"), annotated)
 
