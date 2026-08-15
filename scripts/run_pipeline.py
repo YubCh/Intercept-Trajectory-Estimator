@@ -3,6 +3,8 @@ from src.data_scan.video_source import VideoSource
 from src.data_scan.visualizer import DetectionVisualizer
 from src.modules.detector.yolo_detector import YoloDetector
 from src.core.coordinator import Coordinator
+from src.modules.tracker.iou_tracker import IouTracker
+
 def main():
     parser = argparse.ArgumentParser(description="Run Detections on VisDrone sequence")
     parser.add_argument("--sequence", required=True, help="Path to sequence folder")
@@ -12,13 +14,15 @@ def main():
 
 ######DETECTION
 
-    i = VideoSource(args.sequence)
-    y = YoloDetector()
-    d = DetectionVisualizer(args.output)
-    Coordinator([y,d]).run(i, max_frames=args.max_frames)
+    source = VideoSource(args.sequence)
+    detector = YoloDetector()
+    visualizer = DetectionVisualizer(args.output)
+    tracker = IouTracker()
+    coordinator = Coordinator([detector, tracker, visualizer])
+    coordinator.run(source, max_frames=args.max_frames)
 
 ######TRACKING
-
+    
 
 if __name__ == "__main__":
     main()
