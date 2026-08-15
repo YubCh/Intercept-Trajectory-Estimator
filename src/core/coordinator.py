@@ -12,7 +12,9 @@ class Coordinator:
       
       for module in self.modules:
         module.process(state)
-      print(f"frame {frame_id}: {len(state.detections)} detections, {len(state.tracks)} tracks")
+        
       if max_frames is not None and max_frames <= frame_id + 1:
         break
+      ids = sorted(t.track_id for t in state.tracks) 
+      print(f"frame {frame_id}: {len(state.detections)} det, ids={ids}")
 
