@@ -7,7 +7,7 @@ from src.core.base_module import BaseModule
 
 
 BOX_COLOR = (0, 255, 0)
-
+TRAIL_COLOR = (0, 165, 255) 
 
 class DetectionVisualizer(BaseModule):
   def __init__(self, output_dir="outputs",trail_length=30):
@@ -32,6 +32,6 @@ class DetectionVisualizer(BaseModule):
       trail_points = [detection.center for detection in track.history[-self.trail_length:]]
 
       for start, end in zip(trail_points, trail_points[1:]):
-        cv2.line(annotated, tuple(int(v) for v in start),tuple(int(v) for v in end), BOX_COLOR,1)
+        cv2.line(annotated, tuple(int(v) for v in start),tuple(int(v) for v in end), TRAIL_COLOR,3)
     cv2.imwrite(str(self.output_dir/f"{state.frame_id}.jpg"), annotated)
 
