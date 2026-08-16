@@ -5,7 +5,7 @@ from src.modules.detector.yolo_detector import YoloDetector
 from src.core.coordinator import Coordinator
 from src.modules.tracker.iou_tracker import IouTracker
 from src.modules.predictor.constant_velocity import ConstantVelocityPredictor
-
+from src.data_scan.recorder import CsvRecorder
 def main():
     parser = argparse.ArgumentParser(description="Run Detections on VisDrone sequence")
     parser.add_argument("--sequence", required=True, help="Path to sequence folder")
@@ -18,11 +18,12 @@ def main():
     source = VideoSource(args.sequence)
     detector = YoloDetector()
     visualizer = DetectionVisualizer(args.output)
+    recorder = CsvRecorder()
     tracker = IouTracker()
     predictor = ConstantVelocityPredictor()
-    coordinator = Coordinator([detector, tracker,predictor, visualizer])
+    coordinator = Coordinator([detector, tracker,predictor, visualizer,recorder])
     coordinator.run(source, max_frames=args.max_frames)
-
+    
 ######TRACKING
     
 
