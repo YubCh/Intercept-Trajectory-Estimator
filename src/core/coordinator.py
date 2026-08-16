@@ -17,3 +17,6 @@ class Coordinator:
         break
       ids = sorted(t.track_id for t in state.tracks) 
       print(f"frame {frame_id}: {len(state.detections)} det, {len(state.tracks)} tracks, {len(state.predictions)} predictions")
+
+    for moudle in self.modules:
+      module.finish()
