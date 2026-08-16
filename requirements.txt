@@ -34,3 +34,4 @@ ultralytics==8.4.118
 ultralytics-thop==2.1.6
 urllib3==2.7.0
 pandas>=2.0
+filterpy>=1.4.5
