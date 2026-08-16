@@ -6,3 +6,6 @@ class BaseModule:
 
   def process(self, state:PipelineState):
     raise NotImplementedError
+
+  def finish(self):
+    pass
