@@ -39,7 +39,7 @@ class IouTracker(BaseModule):
       self.next_id += 1
 
     for track in unmatched_tracks:
-      track.frames_since_update =+1
+      track.frames_since_update +=1
 
     self.tracks = [track for track in self.tracks if track.frames_since_update <= self.max_age]
     state.tracks = [track for track, _ in matches]
