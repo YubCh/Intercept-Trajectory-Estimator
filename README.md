@@ -12,21 +12,57 @@ Built on VisDrone2019-MOT — drone footage of road scenes, annotated for multi-
 ![Frame 29](outputs/uav0000339/29.jpg)
 
 # Architecture
+![Classes_uml](results/classes.png)
+![Classes_uml](results/datatypes.png)
+## Data types
+## Key Methods
+
+- Detection:
+- Tracking:
+- Prediction:
 
 
 # Project Structure
-
+```text
+scripts/
+  - run_pipeline.py
+src/
+  core/
+    - base_module.py
+    - coordinator.py
+    - datatypes.py
+  data_scan/
+    - recorder.py
+    - video_source.py
+    - visualizer.py
+  module/
+    detector/
+      - yolo_detector.py
+    predictor/
+      - constant_velocity.py
+    tracker/
+      - iou_tracker.py
+    intercept/ # not written yet
+```
 
 # How to Run
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 
+python -m scripts.run_pipeline --sequence data/visdrone/VisDrone2019-MOT-val/sequences/uav0000339_00001_v
+python -m scripts.evaluate
+```
 
 # What has to be fixed
 ![Frame 30](outputs/uav0000339/30.jpg)
+Frame 30
 ![Frame 36](outputs/uav0000339/36.jpg)
+Frame 36
 
-tracking can swap greedy
+We can see a sudden change in our tracking which is caused by the sudden drop of the drone view. The tracking does not calculate the movement of the camera itself which leads to a sudden change of the position
 
-too fast -> loses detection makes a new one
 
 
 # Tech Stack
