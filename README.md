@@ -10,14 +10,14 @@ Built on VisDrone2019-MOT — drone footage of road scenes, annotated for multi-
 ![Frame 1](outputs/uav0000339/1.jpg)
 ![Frame 12](outputs/uav0000339/12.jpg)
 ![Frame 29](outputs/uav0000339/29.jpg)
-<!-- TODO: find right picture demonstrating the project  -->
+#TODO: find right picture demonstrating the project 
 # Architecture
 ![Classes_uml](results/classes.png)
 ![Classes_uml](results/datatypes.png)
-<!-- TODO: try to recreate uml in digital format  -->
+#TODO: try to recreate uml in digital format  
 ## Data types
 ## Key Methods
-<!-- TODO: describe each module  -->
+#TODO: describe each module
 - Detection:
 - Tracking:
 - Prediction:
@@ -57,7 +57,7 @@ python -m scripts.evaluate
 ```
 
 # What has to be fixed
-<!-- TODO: pick out images that contain our problems  -->
+#TODO: pick out images that contain our problems 
 ![Frame 30](outputs/uav0000339/30.jpg)
 Frame 30
 ![Frame 36](outputs/uav0000339/36.jpg)
