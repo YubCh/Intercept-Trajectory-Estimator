@@ -7,13 +7,13 @@ Built on VisDrone2019-MOT — drone footage of road scenes, annotated for multi-
 
 
 # What it does so far
-![Frame 1](outputs/uav0000339/1.jpg)
-![Frame 12](outputs/uav0000339/12.jpg)
-![Frame 29](outputs/uav0000339/29.jpg)
+![Frame 1](results/outputs_readme/uav0000339/1.jpg)
+![Frame 12](results/outputs_readme/uav0000339/12.jpg)
+![Frame 29](results/outputs_readme/uav0000339/29.jpg)
 #TODO: find right picture demonstrating the project 
 # Architecture
-![Classes_uml](results/classes.png)
-![Classes_uml](results/datatypes.png)
+![Classes_uml](results/outputs_readme/classes.png)
+![Classes_uml](results/outputs_readme/datatypes.png)
 #TODO: try to recreate uml in digital format  
 ## Data types
 ## Key Methods
