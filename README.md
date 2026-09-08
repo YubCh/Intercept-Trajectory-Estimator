@@ -15,12 +15,12 @@ Built on VisDrone2019-MOT — drone footage of road scenes, annotated for multi-
 ![Classes_uml](results/outputs_readme/datatypes.png)
 #TODO: try to recreate uml in digital format  
 ## Data types
-| Type | Represents | 	Key fields |
+| Type | Represents | Key fields |
 |------|-----|------|
 | `Detection` | one object in one frame | `bbox, confidence, class_id, class_name, frame_id` |
 | `Track` | 25 | `track_id, history: list[Detection], frames_since_update `|
-| `Prediction` | 	one future estimate | `track_id, frame_id, horizon, point` |
-| `PipelineState` | 	everything about one frame | the three lists above, plus the frame itself |
+| `Prediction` | one future estimate | `track_id, frame_id, horizon, point` |
+| `PipelineState` | everything about one frame | the three lists above, plus the frame itself |
 
 ## Key Methods
 - Detection:
@@ -62,7 +62,6 @@ python -m scripts.evaluate
 ```
 
 # What has to be fixed
-#TODO: pick out images that contain our problems 
 ![Frame 30](outputs/uav0000339/30.jpg)
 Frame 30
 ![Frame 36](outputs/uav0000339/36.jpg)
@@ -73,6 +72,17 @@ We can see a sudden change in our tracking which is caused by the sudden drop of
 
 
 # Tech Stack
+
+|   |   | 	    |
+|------|-----|------|
+| Python | 	3.10+ | dataclasses, generators, pathlib, stdlib csv |
+| ultralytics | ≥ 8.0 | YOLOv8m object detection |
+| PyTorch | via ultralytics | model inference; CPU only in this project |
+| OpenCV | 	≥ 4.8 | reading frames, drawing boxes, labels, trails and paths |
+| NumPy | ≥ 1.24 | frames as arrays, coordinate arithmetic | 
+| pandas | ≥ 2.0 | the join and group-by in `evaluate.py` |
+| matplotlib | ≥ 3.7 | plotting during development |
+
 
 # Data sources & acknowledgements
 - VisDrone dataset — aerial imagery used throughout this project. Provided by the AISKYEYE team at the Lab of Machine Learning and Data Mining, Tianjin University. Project: https://github.com/VisDrone/VisDrone-Dataset
