@@ -19,6 +19,13 @@ Orangeline: Tracking
 # Architecture
 ![Classes_uml](results/outputs_readme/classes.png)
 ![Classes_uml](results/outputs_readme/datatypes.png)
+
+**Pipes and filters** - Coordinator holds an ordered list of modules and passes a single PipelineState object through every one of them, per frame.
+
+**Shared state object** - PipelineState carries frame_id, frame, detections, tracks and predictions. The detector fills detections; the tracker reads those and fills tracks; the predictor reads those and fills predictions. No module imports another, so adding a field is additive. Modules that do not use it are unaffected.
+
+**Strategy** - All modules implement BaseModule.process(state), so a stage can be replaced without touching the pipeline around it.
+
 #TODO: try to recreate uml in digital format  
 ## Data types
 | Type | Represents | Key fields |
@@ -29,11 +36,11 @@ Orangeline: Tracking
 | `PipelineState` | everything about one frame | the three lists above, plus the frame itself |
 
 ## Key Methods
-- Detection: Takes one frame `state.frame`. Runs it through the object-detection model, filters anything below the confidence threshold, and converts what remains into Detection objects. Produces a `list[Detection]` each one a box in corner form with a confidence, a class name and the index of the frame it came from.
+- **Detection:** Takes one frame `state.frame`. Runs it through the object-detection model, filters anything below the confidence threshold, and converts what remains into Detection objects. Produces a `list[Detection]` each one a box in corner form with a confidence, a class name and the index of the frame it came from.
 
-- Tracking: Takes `state.detections: list[Detection]` and its own `list[Track]` of objects it is currently following. Matches them by box overlap. Matched detections extend their track's history, unmatched detections start new tracks with fresh identities, and unmatched tracks survive a few frames before being dropped. Writes `state.tracks`: `list[Track]` the tracks matched in this frame only.
+- **Tracking:** Takes `state.detections: list[Detection]` and its own `list[Track]` of objects it is currently following. Matches them by box overlap. Matched detections extend their track's history, unmatched detections start new tracks with fresh identities, and unmatched tracks survive a few frames before being dropped. Writes `state.tracks`: `list[Track]` the tracks matched in this frame only.
 
-- Prediction: Takes `state.tracks: list[Track]`. Estimates each track's speed and direction from its history: `list[Detection]`, dividing by the gap between frame_id values rather than the number of entries, since a track may have survived missed frames. Projects that forward to each horizon; tracks with too short a history are skipped. Writes state.predictions: `list[Prediction]` one per track per horizon.
+- **Prediction:** Takes `state.tracks: list[Track]`. Estimates each track's speed and direction from its history: `list[Detection]`, dividing by the gap between frame_id values rather than the number of entries, since a track may have survived missed frames. Projects that forward to each horizon; tracks with too short a history are skipped. Writes state.predictions: `list[Prediction]` one per track per horizon.
 
 
 # Project Structure
@@ -71,9 +78,9 @@ python -m scripts.evaluate
 
 # What has to be fixed
 ![Frame 30](outputs/uav0000339/30.jpg)
-Frame 30
+**Frame 30**
 ![Frame 36](outputs/uav0000339/36.jpg)
-Frame 36
+**Frame 36**
 
 We can see a sudden change in our tracking which is caused by the sudden drop of the drone view. The tracking does not calculate the movement of the camera itself which leads to a sudden change of the position
 
