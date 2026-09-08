@@ -10,14 +10,19 @@ Built on VisDrone2019-MOT — drone footage of road scenes, annotated for multi-
 ![Frame 1](results/outputs_readme/uav0000339/1.jpg)
 ![Frame 12](results/outputs_readme/uav0000339/12.jpg)
 ![Frame 29](results/outputs_readme/uav0000339/29.jpg)
-#TODO: find right picture demonstrating the project 
 # Architecture
 ![Classes_uml](results/outputs_readme/classes.png)
 ![Classes_uml](results/outputs_readme/datatypes.png)
 #TODO: try to recreate uml in digital format  
 ## Data types
+| Type | Represents | 	Key fields |
+|------|-----|------|
+| `Detection` | one object in one frame | `bbox, confidence, class_id, class_name, frame_id` |
+| `Track` | 25 | `track_id, history: list[Detection], frames_since_update `|
+| `Prediction` | 	one future estimate | `track_id, frame_id, horizon, point` |
+| `PipelineState` | 	everything about one frame | the three lists above, plus the frame itself |
+
 ## Key Methods
-#TODO: describe each module
 - Detection:
 - Tracking:
 - Prediction:
