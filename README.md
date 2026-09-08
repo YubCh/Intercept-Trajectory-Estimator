@@ -7,8 +7,15 @@ Built on VisDrone2019-MOT — drone footage of road scenes, annotated for multi-
 
 
 # What it does so far
-Purpleline: Prediction  
-Orangeline: Tracking
+
+```text
+frames -> detection -> tracking -> motion prediction -> visualisation 
+```
+Each stage is an independent module. They never call each other. They read from and write to a shared frame state object, and a coordinator passes that object down the chain.
+
+
+Purple line: Prediction  
+Orange line: Track history
 
 **Frame 1**
 ![Frame 1](results/outputs_readme/uav0000339/1.jpg)
