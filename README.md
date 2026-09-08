@@ -5,17 +5,18 @@ A modern perception pipeline that detects objects in aerial video, tracks them w
 Built on VisDrone2019-MOT — drone footage of road scenes, annotated for multi-object tracking.
 
 
-
+Purple line: Prediction  
+Orange line: Track history
 # What it does so far
 
 ```text
 frames -> detection -> tracking -> motion prediction -> visualisation 
 ```
+
 Each stage is an independent module. They never call each other. They read from and write to a shared frame state object, and a coordinator passes that object down the chain.
 
-
-Purple line: Prediction  
-Orange line: Track history
+***Purple line: Prediction***  
+***Orange line: Track history***
 
 **Frame 1**
 ![Frame 1](results/outputs_readme/uav0000339/1.jpg)
@@ -33,7 +34,6 @@ Orange line: Track history
 
 **Strategy** - All modules implement BaseModule.process(state), so a stage can be replaced without touching the pipeline around it.
 
-#TODO: try to recreate uml in digital format  
 ## Data types
 | Type | Represents | Key fields |
 |------|-----|------|
