@@ -7,8 +7,14 @@ Built on VisDrone2019-MOT — drone footage of road scenes, annotated for multi-
 
 
 # What it does so far
+Purpleline: Prediction  
+Orangeline: Tracking
+
+**Frame 1**
 ![Frame 1](results/outputs_readme/uav0000339/1.jpg)
+**Frame 12**
 ![Frame 12](results/outputs_readme/uav0000339/12.jpg)
+**Frame 29**
 ![Frame 29](results/outputs_readme/uav0000339/29.jpg)
 # Architecture
 ![Classes_uml](results/outputs_readme/classes.png)
@@ -23,9 +29,11 @@ Built on VisDrone2019-MOT — drone footage of road scenes, annotated for multi-
 | `PipelineState` | everything about one frame | the three lists above, plus the frame itself |
 
 ## Key Methods
-- Detection:
-- Tracking:
-- Prediction:
+- Detection: Takes one frame `state.frame`. Runs it through the object-detection model, filters anything below the confidence threshold, and converts what remains into Detection objects. Produces a `list[Detection]` each one a box in corner form with a confidence, a class name and the index of the frame it came from.
+
+- Tracking: Takes `state.detections: list[Detection]` and its own `list[Track]` of objects it is currently following. Matches them by box overlap. Matched detections extend their track's history, unmatched detections start new tracks with fresh identities, and unmatched tracks survive a few frames before being dropped. Writes `state.tracks`: `list[Track]` the tracks matched in this frame only.
+
+- Prediction: Takes `state.tracks: list[Track]`. Estimates each track's speed and direction from its history: `list[Detection]`, dividing by the gap between frame_id values rather than the number of entries, since a track may have survived missed frames. Projects that forward to each horizon; tracks with too short a history are skipped. Writes state.predictions: `list[Prediction]` one per track per horizon.
 
 
 # Project Structure
